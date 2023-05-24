@@ -20,7 +20,7 @@ namespace POLYFOOD.Controllers
             _logger = logger;
         }
 
-        [HttpGet(Name = "GetWeatherForecast"),Authorize(Roles="admin")]
+        [HttpGet(Name = "GetWeatherForecast"),Authorize(Roles = "staff, admin")]
         public String Get()
         {
             return "đã lấy thành công dữ liệu";

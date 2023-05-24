@@ -16,6 +16,13 @@ namespace FOLYFOOD.Entitys
         public DateTime UpdatedAt { get; set; }
         public Account Account { get; set; }
 
+        // Mối quan hệ: Một User có nhiều ProductReview
         public ICollection<ProductReview> ProductReviews { get; set; }
+
+        // Mối quan hệ: Một User có nhiều SevicerReview
+        public ICollection<SevicerReview> SevicerReviews { get; set; }
+
+        // Mối quan hệ: Một User có nhiều Booking
+        public ICollection<Booking> Bookings { get; set; }
     }
 }

@@ -1,5 +1,8 @@
-﻿namespace FOLYFOOD.Entitys
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace FOLYFOOD.Entitys
 {
+    [Table("order_status")]
     public class OrderStatus
     {
         public int OrderStatusId { get; set; }

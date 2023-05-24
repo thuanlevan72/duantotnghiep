@@ -4,12 +4,13 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Security.Claims;
-
+using Microsoft.AspNetCore.Http;
 using FOLYFOOD.Entitys;
 using FOLYFOOD.Services;
 using CloudinaryDotNet.Actions;
 using CloudinaryDotNet;
 using FOLYFOOD.Hellers;
+using FOLYFOOD.Dto;
 
 namespace POLYFOOD.Controllers
 {
@@ -46,6 +47,14 @@ namespace POLYFOOD.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
+        [HttpPost("register-user")]
+        public IActionResult Register([FromBody] RegisterRequets data)
+        {
+            return Ok(new
+            {
+                data = data
+            });
         }
         [HttpPost("login")]
         public IActionResult Authenticate([FromBody] LoginRequest login)

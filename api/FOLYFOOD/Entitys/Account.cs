@@ -14,6 +14,9 @@ namespace FOLYFOOD.Entitys
         [Column("user_name")]
         public string UserName { get; set; }
 
+        [Column("avatar")]
+        public string Avartar { get; set; }
+
         [Column("password")]
         public string Password { get; set; }
 
@@ -30,6 +33,8 @@ namespace FOLYFOOD.Entitys
         public DateTime UpdateAt { get; set; }
 
         public Decentralization Decentralization { get; set; }
+
+        public User User { get; set; }
 
     }
 }
