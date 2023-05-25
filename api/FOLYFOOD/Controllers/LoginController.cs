@@ -11,6 +11,7 @@ using CloudinaryDotNet.Actions;
 using CloudinaryDotNet;
 using FOLYFOOD.Hellers;
 using FOLYFOOD.Dto;
+using BCryptNet = BCrypt.Net.BCrypt;
 
 namespace POLYFOOD.Controllers
 {
@@ -22,12 +23,14 @@ namespace POLYFOOD.Controllers
         private readonly LoginService loginService;
         private readonly Context contextDb;
         private readonly Random rnd;
+        private readonly UserService userService;
         public LoginController(IConfiguration configuration)
         {
             _configuration = configuration;
             loginService = new LoginService();
             contextDb = new Context();
             rnd = new Random();
+            userService = new UserService();
         }
 
         [HttpPost("upload")]
@@ -37,7 +40,7 @@ namespace POLYFOOD.Controllers
             try
             {
                 string imageUrl = await uplloadFile.UploadFile(file);
-                return Ok(imageUrl);
+                return Ok(imageUrl); 
             }
             catch (ArgumentException ex)
             {
@@ -49,12 +52,17 @@ namespace POLYFOOD.Controllers
             }
         }
         [HttpPost("register-user")]
-        public IActionResult Register([FromBody] RegisterRequets data)
+        public async Task<IActionResult> Register([FromForm] RegisterRequets request)
         {
-            return Ok(new
+            
+           var data = await userService.Register(request);
+            if (data == null)
             {
-                data = data
-            });
+                return BadRequest("đăng ký người dùng thất bại");
+            }
+            return Ok(data);
+
+       
         }
         [HttpPost("login")]
         public IActionResult Authenticate([FromBody] LoginRequest login)
@@ -75,7 +83,7 @@ namespace POLYFOOD.Controllers
                 };
 
                 //return the token
-                return Ok(new { loginResponse,data });
+                return Ok(new { loginResponse, data, Decentralization = data.Decentralization.AuthorityName.ToLower() });
             }
             else
             {

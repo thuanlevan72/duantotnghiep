@@ -14,6 +14,9 @@ namespace FOLYFOOD.Entitys
         [Column("user_name")]
         public string UserName { get; set; }
 
+        [Column("email")]
+        public string Email { get; set; }
+
         [Column("avatar")]
         public string Avartar { get; set; }
 

@@ -1,7 +1,10 @@
+using FOLYFOOD.Entitys;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Text.Json.Serialization;
+using AutoMapper;
 
 namespace POLYFOOD
 {
@@ -16,13 +19,23 @@ namespace POLYFOOD
                 options.JsonSerializerOptions.WriteIndented = true;
             });
 
+            var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                                  policy =>
+                                  {
+                                      policy.WithOrigins("http://localhost:8080",
+                                                          "http://www.contoso.com").AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+                                  });
+            });
             // Add services to the container.
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
+            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             // Add JWT Authentication Middleware - This code will intercept HTTP request and validate the JWT.
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
                 opt => {
@@ -45,8 +58,8 @@ namespace POLYFOOD
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI();
+                app.UseCors(MyAllowSpecificOrigins);
             }
-
 
             app.UseCors(policy =>
             policy
@@ -54,7 +67,7 @@ namespace POLYFOOD
             .AllowAnyHeader()
             .AllowAnyMethod()
             );
-
+            app.UseCors(MyAllowSpecificOrigins);
             app.UseHttpsRedirection();
 
             //https://referbruv.com/blog/building-custom-responses-for-unauthorized-requests-in-aspnet-core/
@@ -65,6 +78,9 @@ namespace POLYFOOD
                 if (context.Response.StatusCode == (int)System.Net.HttpStatusCode.Unauthorized)
                 {
                     await context.Response.WriteAsync("Token Validation Has Failed. Request Access Denied");
+                }else if(context.Response.StatusCode == (int)System.Net.HttpStatusCode.Forbidden)
+                {
+                    await context.Response.WriteAsync("your token is not authorized to access");
                 }
             });
 
