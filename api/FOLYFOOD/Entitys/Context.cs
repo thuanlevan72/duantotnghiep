@@ -7,6 +7,7 @@ namespace FOLYFOOD.Entitys
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Decentralization> Decentralizations { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Staff> Staffs { get; set; }
         public DbSet<ProductType> ProductTypes { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
@@ -56,6 +57,13 @@ namespace FOLYFOOD.Entitys
                .Property(d => d.CreatedAt)
                .HasDefaultValue(DateTime.UtcNow);
             modelBuilder.Entity<User>()
+                .Property(d => d.UpdatedAt)
+                .HasDefaultValue(DateTime.UtcNow);
+
+            modelBuilder.Entity<Staff>()
+               .Property(d => d.CreatedAt)
+               .HasDefaultValue(DateTime.UtcNow);
+            modelBuilder.Entity<Staff>()
                 .Property(d => d.UpdatedAt)
                 .HasDefaultValue(DateTime.UtcNow);
 
@@ -139,7 +147,7 @@ namespace FOLYFOOD.Entitys
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=DESKTOP-NTJ1ROJ; Database=poly_food; integrated security=sspi;TrustServerCertificate=True");
+            optionsBuilder.UseSqlServer("Server=DESKTOP-NTJ1ROJ; Database=test111; integrated security=sspi;TrustServerCertificate=True");
         }
     }
 }

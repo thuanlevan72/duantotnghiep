@@ -18,9 +18,9 @@ namespace FOLYFOOD.Dto
         public string Password { get; set; }
 
        
-        public int Status { get; set; }
+        public int? Status { get; set; }
 
       
-        public int DecentralizationId { get; set; }
+        public int? DecentralizationId { get; set; }
     }
 }

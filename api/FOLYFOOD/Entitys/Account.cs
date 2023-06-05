@@ -39,5 +39,6 @@ namespace FOLYFOOD.Entitys
 
         public User User { get; set; }
 
+        public Staff Staff { get; set; }
     }
 }

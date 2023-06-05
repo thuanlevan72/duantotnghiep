@@ -20,14 +20,14 @@ namespace POLYFOOD.Controllers
     public class LoginController : ControllerBase
     {
         private readonly IConfiguration _configuration;
-        private readonly LoginService loginService;
+        private readonly SecurityUserService SecurityUser;
         private readonly Context contextDb;
         private readonly Random rnd;
         private readonly UserService userService;
         public LoginController(IConfiguration configuration)
         {
             _configuration = configuration;
-            loginService = new LoginService();
+            SecurityUser = new SecurityUserService();
             contextDb = new Context();
             rnd = new Random();
             userService = new UserService();
@@ -55,7 +55,7 @@ namespace POLYFOOD.Controllers
         public async Task<IActionResult> Register([FromForm] RegisterRequets request)
         {
             
-           var data = await userService.Register(request);
+           var data = await SecurityUser.Register(request);
             if (data == null)
             {
                 return BadRequest("đăng ký người dùng thất bại");
@@ -64,12 +64,25 @@ namespace POLYFOOD.Controllers
 
        
         }
+        [HttpPost("register-staff")]
+        public async Task<IActionResult> RegisterStaff([FromForm] RegisterRequets request)
+        {
+
+            var data = await SecurityUser.RegisterStaff(request);
+            if (data == null)
+            {
+                return BadRequest("đăng ký người dùng thất bại");
+            }
+            return Ok(data);
+
+
+        }
         [HttpPost("login")]
         public IActionResult Authenticate([FromBody] LoginRequest login)
         {
             var loginResponse = new LoginResponse { };
             //loginService.checkLogin(login.UserName, login.Password);
-            var data = loginService.checkLogin(login.UserName, login.Password);
+            var data = SecurityUser.checkLogin(login.email, login.Password);
 
             // if credentials are valid
             if (data != null)

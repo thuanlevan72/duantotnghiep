@@ -1,4 +1,8 @@
-﻿using FOLYFOOD.Entitys;
+﻿using FOLYFOOD.Dto;
+using FOLYFOOD.Dto.UserDto;
+using FOLYFOOD.Entitys;
+using FOLYFOOD.Hellers.imageChecks;
+using FOLYFOOD.Hellers.Mail;
 using FOLYFOOD.Hellers.Pagination;
 using FOLYFOOD.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -9,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FOLYFOOD.Controllers.user
 {
     [Route("api/[controller]")]
-    [ApiController, Authorize(Roles = "staff, admin")]
+    [ApiController]
     public class UserController : ControllerBase
     {
         private readonly UserService userService;
@@ -20,19 +24,36 @@ namespace FOLYFOOD.Controllers.user
         }
         
 
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "staff, admin")]
         public async Task<IActionResult> Get(int page = 1, int pageSize = 10)
         {
             var accounts = await userService.getListUser();
+            RetunObject<PagedResult<Account>> test  =new RetunObject<PagedResult<Account>>()
+            {
+                data =  PaginationHelper.GetPagedData(accounts, page, pageSize),
+                mess= "đã lấy được dữ liệu",
+                statusCode = 200,
+        };
             PagedResult<Account> pagedProducts = PaginationHelper.GetPagedData(accounts, page, pageSize);
-            return Ok(pagedProducts);
+            return Ok(test);
         }
-
+        [HttpGet("/sendMail")]
+        public async Task<IActionResult> sendMail(string mailTo, string Subject)
+        {
+          string str = SendMail.send(mailTo, Template1.temlapteHtmlMail(), Subject);
+           return Ok(str);
+        }
         // GET api/<UserController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            return "value";
+            var user = await userService.getOneUser(id);
+            if(user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(user);
         }
 
         // POST api/<UserController>
@@ -43,8 +64,16 @@ namespace FOLYFOOD.Controllers.user
 
         // PUT api/<UserController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public async Task<IActionResult> Put(int id, [FromForm] UserUpdateClient value)
         {
+            RetunObject<Account> data = await userService.updateOneAccount(value, id);
+            return Ok(data);
+        }
+        [HttpPut("update_avatar/{id}")]
+        public async Task<IActionResult> PutImageAvatar(int id, IFormFile Avatar)
+        {
+            RetunObject<string> link = await userService.updateImageAvatar(Avatar, id);
+            return Ok(link);
         }
 
         // DELETE api/<UserController>/5
