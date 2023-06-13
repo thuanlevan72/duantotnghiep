@@ -28,13 +28,13 @@ namespace FOLYFOOD.Controllers.user
         public async Task<IActionResult> Get(int page = 1, int pageSize = 10)
         {
             var accounts = await userService.getListUser();
+            var res = PaginationHelper.GetPagedData(accounts, page, pageSize);
             RetunObject<PagedResult<Account>> test  =new RetunObject<PagedResult<Account>>()
             {
-                data =  PaginationHelper.GetPagedData(accounts, page, pageSize),
-                mess= "đã lấy được dữ liệu",
+                data = res,
+                mess = res.Data.Count() > 0 ? "đã lấy được dữ liệu" : "không có data",
                 statusCode = 200,
-        };
-            PagedResult<Account> pagedProducts = PaginationHelper.GetPagedData(accounts, page, pageSize);
+            };
             return Ok(test);
         }
         [HttpGet("/sendMail")]

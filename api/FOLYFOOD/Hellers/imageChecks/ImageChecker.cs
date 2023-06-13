@@ -7,9 +7,11 @@ namespace FOLYFOOD.Hellers.imageChecks
 {
     public class ImageChecker
     {
-        // hàm này để kiểm tra nếu ảnh quá lớn thì nó sẽ trả về Exception hết nha
-        public static bool IsImage(IFormFile imageFile, int maxSizeInBytes)
+        
+        // hàm này để kiểm tra nếu ảnh quá lớn thì nó sẽ trả về Exception 
+        public static bool IsImage(IFormFile imageFile, int maxSizeInBytes = (2 * 1024 * 1024))
         {
+            // mặc định nếu người dùng không truyền vào thì file nó phải mặc định là ảnh và dung lượng của nó không được
             try
             {
                 using (var image = Image.Load<Rgba32>(imageFile.OpenReadStream()))

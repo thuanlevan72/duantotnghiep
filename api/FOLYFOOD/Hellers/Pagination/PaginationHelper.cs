@@ -2,14 +2,11 @@
 {
     public class PaginationHelper
     {
-        public static PagedResult<T> GetPagedData<T>(List<T> data, int page, int pageSize)
+        public static PagedResult<T> GetPagedData<T>(IQueryable<T> data, int page, int pageSize)
         {
-            int totalItems = data.Count;
+            int totalItems = data.Count();
             int totalPages = (int)Math.Ceiling((decimal)totalItems / pageSize);
-            List<T> pagedData = data
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .ToList();
+            data = data.Skip((page - 1) * pageSize).Take(pageSize);
 
             return new PagedResult<T>
             {
@@ -17,7 +14,7 @@
                 TotalPages = totalPages,
                 Page = page,
                 PageSize = pageSize,
-                Data = pagedData
+                Data = data
             };
         }
     }

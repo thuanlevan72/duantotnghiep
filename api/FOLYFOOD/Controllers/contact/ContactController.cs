@@ -23,11 +23,11 @@ namespace FOLYFOOD.Controllers.contact
         public IActionResult Get(int page = 1, int pageSize = 10)
         {
             var data = contactService.getDataContact();
-            var res = PaginationHelper.GetPagedData(data.data.ToList(), page, pageSize);
+            var res = PaginationHelper.GetPagedData(data.data, page, pageSize);
             RetunObject<PagedResult<Contact>> test = new RetunObject<PagedResult<Contact>>()
             {
                 data = res,
-                mess = res.Data.Count > 0 ? "đã lấy được dữ liệu" : "không có data",
+                mess = res.Data.Count()  > 0 ? "đã lấy được dữ liệu" : "không có data",
                 statusCode = 200,
             };
             return Ok(test);

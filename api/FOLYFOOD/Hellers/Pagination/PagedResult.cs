@@ -8,6 +8,6 @@
         public int PageSize { get; set; }
         public bool HasPrevious => Page > 1;
         public bool HasNext => Page < TotalPages;
-        public List<T> Data { get; set; }
+        public IQueryable<T> Data { get; set; }
     }
 }

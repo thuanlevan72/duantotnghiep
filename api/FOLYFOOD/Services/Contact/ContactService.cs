@@ -88,7 +88,7 @@ namespace FOLYFOOD.Services.Contact
                 data = contactCreate,
                 mess = "đã lấy được liên hệ",
                 statusCode = 200,
-            }; ;
+            };
         }
 
         public RetunObject<Entitys.Contact> replyToContact(string email, string MessageContent)

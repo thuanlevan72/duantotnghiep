@@ -18,10 +18,10 @@ namespace FOLYFOOD.Services
             DbContext = new Context();
         }
 
-        public async Task<List<Account>> getListUser()
+        public async Task<IQueryable<Account>> getListUser()
         {
             // lấy dữ liệu user nha 
-            var listUser = DbContext.Accounts.AsNoTracking().Include(x => x.User).Where(x => x.DecentralizationId == 3).ToList();
+            var listUser = DbContext.Accounts.AsNoTracking().Include(x => x.User).Where(x => x.DecentralizationId == 3);
             return listUser;
         }
 

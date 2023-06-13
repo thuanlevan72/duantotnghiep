@@ -8,6 +8,7 @@
         public string Phone { get; set; }
         public string Email { get; set; }
         public string Title { get; set; }
+        public bool IsShow { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }
