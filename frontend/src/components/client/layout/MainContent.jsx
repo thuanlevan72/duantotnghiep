@@ -18,6 +18,7 @@ function MainContent() {
           className="site-layout-content"
           style={{
             width: "80%",
+            maxWidth:"1400px",
             margin: "20px 10%",
           }}
         >

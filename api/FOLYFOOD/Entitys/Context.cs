@@ -147,7 +147,7 @@ namespace FOLYFOOD.Entitys
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=DESKTOP-NTJ1ROJ; Database=test111; integrated security=sspi;TrustServerCertificate=True");
+            optionsBuilder.UseSqlServer("Server=DESKTOP-NTJ1ROJ; Database=test; integrated security=sspi;TrustServerCertificate=True");
         }
     }
 }
