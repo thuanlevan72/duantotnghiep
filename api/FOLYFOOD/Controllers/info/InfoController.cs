@@ -80,6 +80,7 @@ namespace FOLYFOOD.Controllers.info
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+
         }
     }
 }
