@@ -1,25 +1,28 @@
-
-
-import Products from "../components/Products";
-import BestSeller from "../components/BestSeller";
-import Laptop from "../components/Laptop";
-import Desktop from "../components/Desktop";
-import NoMatch from "../components/NoMatch";
-import MainContent from "../components/client/layout/MainContent";
+import ClientLayout from "../layouts/ClientLayout";
+import AdminLayout from "../layouts/AdminLayout";
+import HomePage from "../pages/HomePage";
+import ProductList from "../components/ProductList";
+import ProductDetail from "../components/ProductDetail";
+import Signin from "../components/Signin";
+import Signup from "../components/Signup";
+import Profile from "../components/Profile";
+import Contact from "../components/Contact";
 
 const routes = [
-  { path: "/", element: <MainContent /> },
-  {
-    path: "/products",
-    element: <Products />,
-    children: [
-      { index: true, element: <BestSeller /> },
-      { path: "laptop", element: <Laptop /> },
-      { path: "desktop", element: <Desktop /> }
-    ]
-  },
-  { path: "*", element: <NoMatch /> }
+    {
+        path: "/",
+        element: <ClientLayout />,
+        children: [
+            { index: true, element: <HomePage /> },
+            { path: "profile", element: <Profile /> },
+            { path: "product", element: <ProductList /> },
+            { path: "product/:id", element: <ProductDetail /> },
+            { path: "contact", element: <Contact /> },
+        ],
+    },
+    { path: "signup", element: <Signup /> },
+    { path: "signin", element: <Signin /> },
+    { path: "/admin", element: <AdminLayout />, children: [] },
 ];
-
 
 export default routes;
