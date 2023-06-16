@@ -1,16 +1,40 @@
 import React from "react";
 import { Button, Checkbox, Divider, Form, Input, Typography } from 'antd';
 import { GoogleOutlined, FacebookFilled } from '@ant-design/icons';
+import UserApi from "../api/security/UserApi";
+import { useNavigate } from "react-router-dom";
 
 
-const onFinish = (values) => {
-    console.log('Success:', values);
-};
-const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
-};
+
 
 const Signin = () => {
+
+  const navigate = useNavigate();
+    const onFinish =  async (values) => {
+      console.log('Success:', values);
+      try {
+        const response = await UserApi.Login(values) // đưa dữ liệu lên đăng ký
+        console.log(response);
+        if(response.data.decentralizationId != 3){
+          //nếu đi vào đây thì người đó không phải là người dùng nên phải đưa về admin
+          return;
+        }
+        response.data.password=null;
+        const userJSON = JSON.stringify(response.data); // lưu dữ liệu người dùng
+        const token = JSON.stringify(response.loginResponse.token); // lưu token vào để sau lấy dữ liệu sẽ cần phải dùng 
+        localStorage.setItem("user",userJSON); 
+        localStorage.setItem("token",token);
+        alert("đã đăng nhập thành công");
+        navigate("/");
+        // Xử lý phản hồi từ API tại đây (ví dụ: hiển thị thông báo thành công, điều hướng đến trang khác, vv)
+      } catch (error) {
+        alert(error.response.data);
+        // Xử lý lỗi tại đây (ví dụ: hiển thị thông báo lỗi)
+      }
+  };
+  const onFinishFailed = (errorInfo) => {
+      console.log('Failed:', errorInfo);
+    };
     return (
         <div className="login">
             <Form
@@ -27,10 +51,10 @@ const Signin = () => {
                 <Typography.Title style={{ color: "#f34848" }}>Đăng nhập Poly Food</Typography.Title>
                 <Form.Item
                     label="Email"
-                    name="username"
+                    name="email"
                     rules={[{ required: true, message: 'Vui lòng nhập email' }]}
                 >
-                    <Input placeholder="Email đăng nhập" />
+                    <Input placeholder="Email đăng nhập" size={"large"} />
                 </Form.Item>
 
                 <Form.Item
@@ -38,7 +62,7 @@ const Signin = () => {
                     name="password"
                     rules={[{ required: true, message: 'Vui lòng nhập mật khẩu' }]}
                 >
-                    <Input.Password placeholder="Mật khẩu đăng nhập" />
+                    <Input.Password placeholder="Mật khẩu đăng nhập" size={"large"} />
                 </Form.Item>
 
                 <Form.Item name="remember" valuePropName="checked" wrapperCol={{ offset: 8, span: 16 }}>
@@ -46,7 +70,7 @@ const Signin = () => {
                 </Form.Item>
 
                 <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
-                    <Button type="primary" htmlType="submit" block style={{ backgroundColor: "rgb(255, 213, 98)", color: "black" }}>
+                    <Button type="primary" htmlType="submit" size={"large"} block style={{ backgroundColor: "rgb(255, 213, 98)", color: "black" }}>
                         Đăng nhập
                     </Button>
                 </Form.Item>
@@ -54,8 +78,8 @@ const Signin = () => {
                 <Divider style={{ borderColor: "#f34848", color: "#f34848" }}><a href="/signup">Đăng ký</a> hoặc Đăng nhập với</Divider>
 
                 <div className="socialLogin">
-                    <GoogleOutlined style={{ color: "red" }} />
-                    <FacebookFilled style={{ color: "blue" }} />
+                    <GoogleOutlined  size={"large"}style={{ color: "red" }} />
+                    <FacebookFilled  size={"large"} style={{ color: "blue" }} />
                 </div>
             </Form>
         </div>
