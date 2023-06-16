@@ -1,6 +1,7 @@
 :root {
     --primary-color: #9d1e21;
 }
+
 body {
     font-size: 16px;
     line-height: 1.6;
@@ -24,6 +25,7 @@ body {
     height: auto;
     line-height: 1.6;
 }
+
 /* Title holder */
 .titleHolder {
     text-align: center;
@@ -55,12 +57,14 @@ body {
     right: 0;
     z-index: 999;
 }
+
 .logo img {
     max-height: 100px;
     background: #fff;
     padding: 5px;
     border-radius: 5px;
 }
+
 .header {
     display: flex;
     justify-content: space-between;
@@ -131,16 +135,20 @@ body {
     right: 5%;
     opacity: 1;
 }
+
 .menu {
     flex-basis: 50%;
 }
+
 /* ant menu */
 .ant-menu {
     margin-top: 10px;
 }
+
 .ant-menu-title-content {
     color: #ffffff;
 }
+
 .header .ant-menu {
     border: 0;
     background: none !important;
@@ -191,6 +199,7 @@ body {
     right: 5%;
     opacity: 1;
 }
+
 /* ant-btn */
 .ant-input-search-button {
     background: #ebebeb;
@@ -203,6 +212,7 @@ body {
     padding: 0px 35px;
     text-transform: none;
 }
+
 /* btn-group */
 .button-group,
 .wishlist,
@@ -210,6 +220,7 @@ body {
 .cart {
     display: flex;
 }
+
 .wishlist,
 .signin,
 .cart {
@@ -218,6 +229,7 @@ body {
     width: 115px;
     padding: 15px 0;
 }
+
 .wishlist-icon,
 .signin-icon,
 .cart-icon {
@@ -228,6 +240,7 @@ body {
     margin-right: 5px;
     margin-top: 2px;
 }
+
 .wishlist-text,
 .signin-text,
 .cart-text {
@@ -236,24 +249,29 @@ body {
     display: block;
     font-size: 15px;
 }
+
 /* Body */
 .content {
     margin-top: 139px;
 }
+
 .slider img {
     width: 100%;
     height: auto;
     margin: 0 auto;
 }
+
 .main-home {
     width: 1200px;
     margin: 0 auto;
 }
+
 /* Menu cate */
 .list-food-menu {
     display: flex;
     justify-content: space-between;
 }
+
 /* Item product */
 .food-name a {
     color: #252525;
@@ -268,6 +286,7 @@ body {
     overflow: hidden;
     display: block;
 }
+
 .food-price {
     color: #29ae32;
     font-size: 16px;
@@ -276,7 +295,8 @@ body {
     font-family: Arial;
     word-break: break-word;
 }
-.bookmarkHeart{
+
+.bookmarkHeart {
     position: absolute;
     top: 0;
     left: 12px;
@@ -286,19 +306,50 @@ body {
     color: #575757;
     font-size: 30px;
 }
-.bookmarkHeart:hover{
+
+.bookmarkHeart:hover {
     color: #ff1e22;
 }
-.ant-rate{
+
+.ant-rate {
     display: block;
     font-size: 20px;
 }
-.ant-rate > li{
+
+.ant-rate>li {
     margin-inline: 12px !important;
     padding-inline: 2px !important;
     margin-inline-start: 0 !important;
 
 }
-.ant-image-mask:hover{
+
+.ant-image-mask:hover {
     background: rgb(143 143 143 / 50%)
+}
+
+/* Style Login */
+.login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background: url('./assets/images/background-login2.jpg');
+    background-size: cover;
+}
+
+.loginForm {
+    background-color: rgba(206, 183, 183, 0.26);
+    box-shadow: 0px 8px 36px 0 rgb(255, 213, 98);
+    backdrop-filter: blur(2px);
+    padding: 16px;
+    border-radius: 32px;
+}
+
+.socialLogin {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    color: rgb(245, 204, 204);
+    font-size: 24px;
 }
