@@ -32,16 +32,16 @@ const Signup = () => {
         const formData = new FormData();
         formData.append("UserName", values.username);
         formData.append("Email", values.email);
-        values.image ?? formData.append("Avatar", values.image.file); // nếu có ảnh thì mới gửi lên không thì không gửi
+        formData.append("Avatar",values.image ? values.image.file.originFileObj : null); // nếu có ảnh thì mới gửi lên không thì không gửi
         formData.append("Password", values.password);
         formData.append("Status", 1);
         formData.append("DecentralizationId", 3);
 
-        console.log(dataPost)
+        console.log(formData)
         try {
             const response = await UserApi.Register(formData); // đưa dữ liệu lên đăng ký
             alert("bạn đã đăng ký thành công");
-            navigate("signin")
+            navigate("/signin")
             // Xử lý phản hồi từ API tại đây (ví dụ: hiển thị thông báo thành công, điều hướng đến trang khác, vv)
         } catch (error) {
             console.error(error);
